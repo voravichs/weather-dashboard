@@ -1,0 +1,8 @@
+.custom-header {
+    background: rgb(141,134,255);
+    background: linear-gradient(90deg, rgba(141,134,255,1) 0%, rgba(54,47,173,1) 50%, rgba(7,0,121,1) 99%, rgba(7,0,117,1) 100%); 
+}
+
+.custom-search-results {
+    background-color: lightgrey;
+}
