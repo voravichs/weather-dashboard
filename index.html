@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <header class="custom-header">
+    <header class="custom-gradient">
         <h1 class="text-center text-white fs-1 fw-bolder py-4 mb-3"> Weather Dashboard </h1>
     </header>
 
@@ -23,7 +23,7 @@
             <div class="col-3">
                 <!-- Search -->
                 <form class="border-bottom border-3 border-secondary" id="search-form">
-                    <h3>Search for a city:</h3>
+                    <h2>Search for a city:</h2>
                     <input class="form-control" id="search-input" type="text" placeholder="San Diego">
                     <div class="form-text" id="form-text">Enter a city name to start.</div>
                     <div class="d-grid">
@@ -41,26 +41,10 @@
             <!-- Search Results -->
             <div class="col-9">
                 <!-- Data about Current City -->
-                <div class="border border-3 border-secondary p-3 mb-3" id="search-result"> 
-                    <!-- 
-                    <h3 class="mb-4">Atlanta (Current Day)</h3>
-                    <p class="ms-4">Temp:</p>
-                    <p class="ms-4">Wind:</p>
-                    <p class="ms-4">Humidity</p>
-                    <p class="ms-4">UV Index: <span class="rounded bg-success text-white px-3 py-2">0.69</span> </p> 
-                    -->
-                </div>
+                <div class="border border-3 border-secondary p-3 mb-3 custom-gradient" id="search-result"></div>
                 <!-- 5 Day Forecast Cards -->
-                <h3>5-Day Forecast</h3>
-                <div class="row ms-auto" id="forecast-cards">
-                    <!-- 
-                    <div class="col card">c</div>
-                    <div class="col card">c</div>
-                    <div class="col card">c</div>
-                    <div class="col card">c</div>
-                    <div class="col card">c</div> 
-                    -->
-                </div>
+                <h2 class="fw-bolder">5-Day Forecast</h2>
+                <div class="row ms-auto" id="forecast-cards"></div>
             </div>
         </div>
     </main> 
