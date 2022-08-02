@@ -18,7 +18,8 @@ function handleSubmit (event) {
     event.preventDefault();
     var searchInput = $('#search-input').val();
     if (!searchInput) {
-        searchTextEl.text('Please enter a valid city name!');
+        searchTextEl.text('Please enter a city name!');
+        searchTextEl.css('color', 'red');
         return;
     }
     searchCity(searchInput);
@@ -38,6 +39,7 @@ function searchCity(searchInput) {
         .then(function (data) {
             if (!data[0]) {
                 searchTextEl.text('Please enter a valid city name!');
+                searchTextEl.css('color', 'red');
                 return;
             }
             var lat = 'lat=' + data[0].lat;
@@ -52,6 +54,13 @@ function renderSearchResults(cityQuery, cityName) {
     // remove previous results
     removePreviousSearch();
 
+    // store query result to local storage with the city name as the key
+    localStorage.setItem(cityName, cityQuery);
+
+    // Display 'search successful' in form
+    searchTextEl.text('Search Successful.');
+    searchTextEl.css('color', 'grey');
+
     // build the URL from query 
     var localQueryURL = apiURL + cityQuery + apiUnits + apiExcludeQuery + apiKey;
     
@@ -60,8 +69,9 @@ function renderSearchResults(cityQuery, cityName) {
             return response.json();
         })
         .then(function (data) {
+            console.log(data);
             // Write search history
-            searchHistoryEl.prepend('<p class="rounded p-2 mb-2 custom-search-results">'+  cityName + ' (' + today + ') ' + '</p>');
+            renderSearchHistory();
             
             // Write Search Result to Box
             var todayWeatherList = ['Temp: ' + data.current.temp + ' °F', 'Wind Speed: '+ data.current.wind_speed + ' MPH', 'Humidity: ' + data.current.humidity + '%'];
@@ -89,7 +99,7 @@ function renderSearchResults(cityQuery, cityName) {
                 var currDay = moment.unix(data.daily[i].dt).format('l');
                 var currIconURL = apiImgURL + data.daily[i].weather[0].icon + '@4x.png';
                 forecastCardsEl.append(
-                    '<div class="col card p-2 m-2 text-white custom-gradient-card"> \n' +
+                    '<div class="col card p-2 m-2 text-white custom-gradient-card">' +
                       '<h4>' + currDay + '</h4>' +
                       '<img src="'+ currIconURL +'" alt="'+ data.daily[i].weather[0].description +'">' +
                       '<p> Temp: ' + data.daily[i].temp.day + ' °F </p>' +
@@ -101,9 +111,31 @@ function renderSearchResults(cityQuery, cityName) {
         })
 }
 
+// Remove the contents of the box before adding onto them
 function removePreviousSearch() {
     searchResultEl[0].innerHTML = '';
     forecastCardsEl[0].innerHTML = '';
+}
+
+// When user clicks a city in the search history, show results once again
+searchHistoryEl.on('click', '.btn', handleSearchHistory)
+function handleSearchHistory(event) {
+    var searchHistoryItem = event.target.innerHTML;
+    renderSearchResults(localStorage.getItem(searchHistoryItem),searchHistoryItem);
+}
+
+// Displays the search history based on the contents of local storage
+// Credit to https://stackoverflow.com/questions/3138564/looping-through-localstorage-in-html5-and-javascript
+// for help on looping through local storage
+function renderSearchHistory() {
+    searchHistoryEl[0].innerHTML = '';
+    for (let i = 0; i < localStorage.length; i++) {
+        searchHistoryEl.prepend(
+            '<div class="d-grid">' +
+                '<button type="button" class="btn btn-secondary mb-2">'+  localStorage.key(i) + '</button>' +
+            '</div>'
+        );
+    }
 }
 
 // Credit https://flexiple.com/javascript-capitalize-first-letter/ for implementation
@@ -122,3 +154,6 @@ function capitalize(string) {
     const finalString = arr.join(" ");
     return finalString;
 }
+
+// Initially render search history
+renderSearchHistory();
