@@ -5,8 +5,8 @@ var searchResultEl = $('#search-result');
 var forecastCardsEl = $('#forecast-cards');
 
 var apiURL = 'https://api.openweathermap.org/data/2.5/onecall?';
-var apiGeoURL = 'http://api.openweathermap.org/geo/1.0/direct?q=';
-var apiImgURL = 'http://openweathermap.org/img/wn/'
+var apiGeoURL = 'https://api.openweathermap.org/geo/1.0/direct?q=';
+var apiImgURL = 'https://openweathermap.org/img/wn/'
 var apiExcludeQuery = '&exclude=minutely,hourly';
 var apiUnits = '&units=imperial'
 var apiKey = '&appid=4f6a3fea6209de90cad619a8c1893016';
@@ -59,7 +59,7 @@ function renderSearchResults(cityQuery, cityName) {
 
     // Display 'search successful' in form
     searchTextEl.text('Search Successful.');
-    searchTextEl.css('color', 'grey');
+    searchTextEl.css('color', 'green');
 
     // build the URL from query 
     var localQueryURL = apiURL + cityQuery + apiUnits + apiExcludeQuery + apiKey;
