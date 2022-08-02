@@ -69,7 +69,6 @@ function renderSearchResults(cityQuery, cityName) {
             return response.json();
         })
         .then(function (data) {
-            console.log(data);
             // Write search history
             renderSearchHistory();
             
